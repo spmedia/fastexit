@@ -60,11 +60,11 @@ read -p "Enter your desired Exit nickname: "  Name
 echo "Nickname $Name" > /etc/tor/torrc
 
 # DirPort for Exit
-read -p "Enter your desired DirPort: " DirPort
+read -p "Enter your desired DirPort: (example: 80, 9001) " DirPort
 echo "DirPort $DirPort" >> /etc/tor/torrc
 
 # ORPort for Exit
-read -p "Enter your desired ORPort: " ORPort
+read -p "Enter your desired ORPort: (example: 443, 9030) " ORPort
 echo "ORPort $ORPort" >> /etc/tor/torrc
 
 ## Advanced ExitPolicy Tor Exit Setup. Updated 10/20/16. This policy will help cut down on crimeware/malware/ransomware from using your Tor Exit Node/Server.
