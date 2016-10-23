@@ -30,7 +30,7 @@
 flavor=`lsb_release -cs`
 
 # Installing dependencies for Tor
-read -p "Do you want to fetch the core Tor dependances? (Y/N)" REPLY
+read -p "Do you want to fetch the core Tor dependencies? (Y/N)" REPLY
 if [ "${REPLY,,}" == "y" ]; then
    echo deb http://deb.torproject.org/torproject.org $flavor main >> /etc/apt/sources.list.d/torproject.list
    echo deb-src http://deb.torproject.org/torproject.org $flavor main >> /etc/apt/sources.list.d/torproject.list
