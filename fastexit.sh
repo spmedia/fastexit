@@ -65,7 +65,7 @@ This might help cut down on Abuse notices you might get. (Y/N)" REPLY
 if [ "${REPLY,,}" == "y" ]; then
     echo deb http://nginx.org/packages/$system/ $flavor nginx > /etc/apt/sources.list.d/tornginx.list
     echo deb-src http://nginx.org/packages/$system/ $flavor nginx >> /etc/apt/sources.list.d/tornginx.list
-    wget https://nginx.org/keys/nginx_signing.key
+    wget -4 https://nginx.org/keys/nginx_signing.key
     apt-key add nginx_signing.key
 fi
 
@@ -84,7 +84,7 @@ if [ "${REPLY,,}" == "y" ]; then
   apt-get install nginx
   service nginx status
   echo "Grabbing fastexit-website-template from GitHub.."
-  wget https://github.com/torworld/fastexit-website-template/archive/master.tar.gz -O - | tar -xz -C /usr/share/nginx/html/  && mv /usr/share/nginx/html/fastexit-website-template-master/* /usr/share/nginx/html/
+  wget -4 https://github.com/torworld/fastexit-website-template/archive/master.tar.gz -O - | tar -xz -C /usr/share/nginx/html/  && mv /usr/share/nginx/html/fastexit-website-template-master/* /usr/share/nginx/html/
   echo "Removing temporary files/folders.."
   rm -rf /usr/share/nginx/html/fastexit-website-template-master*
 fi
