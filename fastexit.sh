@@ -20,22 +20,53 @@
 # author           :TorWorld A Project Under The CryptoWorld Foundation.
 # contributors     :KsaRedFx, SPMedia
 # date             :10-20-2016
-# version          :0.0.2 Alpha
+# version          :0.0.3 Alpha
 # os               :Debian/Ubuntu
 # usage            :bash fastexit.sh
 # notes            :If you have any problems feel free to email us: security[at]torworld.org
 #===============================================================================================================================================
 
+# Checking if lsb_release is Installed
+if [ ! -x  /usr/bin/lsb_release ]
+then
+    echo -e "\033[31mLsb_release Command Not Found\e[0m"
+    echo -e "\033[34mInstalling lsb-release, Please Wait...\e[0m"
+    apt-get install lsb-release
+fi
+
+# Checking if wget is Installed
+if [ ! -x  /usr/bin/wget ]
+then
+    echo -e "\033[31mwget Command Not Found\e[0m"
+    echo -e "\033[34mInstalling wget, Please Wait...\e[0m"
+    apt-get install wget
+fi
+
 # Getting Codename of the OS
 flavor=`lsb_release -cs`
+
+# Getting actual Distro of the OS
+system=`lsb_release -i | grep "Distributor ID:" | sed 's/Distributor ID://g' | sed 's/["]//g' | awk '{print tolower($1)}'`
 
 # Installing dependencies for Tor
 read -p "Do you want to fetch the core Tor dependencies? (Y/N)" REPLY
 if [ "${REPLY,,}" == "y" ]; then
-   echo deb http://deb.torproject.org/torproject.org $flavor main >> /etc/apt/sources.list.d/torproject.list
+   echo deb http://deb.torproject.org/torproject.org $flavor main > /etc/apt/sources.list.d/torproject.list
    echo deb-src http://deb.torproject.org/torproject.org $flavor main >> /etc/apt/sources.list.d/torproject.list
    gpg --keyserver keys.gnupg.net --recv 886DDD89
    gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
+fi
+
+# Installing dependencies for Nginx
+read -p "Attention! You're about to install Tor, and have it configured for an Exit node.
+Would you like to have us grab the Nginx dependencies as well?
+We recommend Exit node runners to put up a web page stating this node is an Exit node.
+This might help cut down on Abuse notices you might get. (Y/N)" REPLY
+if [ "${REPLY,,}" == "y" ]; then
+    echo deb http://nginx.org/packages/$system/ $flavor nginx > /etc/apt/sources.list.d/tornginx.list
+    echo deb-src http://nginx.org/packages/$system/ $flavor nginx >> /etc/apt/sources.list.d/tornginx.list
+    wget https://nginx.org/keys/nginx_signing.key
+    apt-key add nginx_signing.key
 fi
 
 # Updating / Upgrading System
@@ -43,6 +74,19 @@ read -p "Do you wish to upgrade system packages? (Y/N)" REPLY
 if [ "${REPLY,,}" == "y" ]; then
    apt-get update
    apt-get dist-upgrade
+fi
+
+# Installing Nginx
+read -p "If you said "Y" on grabbing Nginx dependencies.
+Then please press "Y" again to compelete the Installtion of Nginx. (Y/N)" REPLY
+if [ "${REPLY,,}" == "y" ]; then
+  echo "Installing Nginx now.."
+  apt-get install nginx
+  service nginx status
+  echo "Grabbing fastexit-website-template from GitHub.."
+  wget https://github.com/torworld/fastexit-website-template/archive/master.tar.gz -O - | tar -xz -C /usr/share/nginx/html/  && mv /usr/share/nginx/html/fastexit-website-template-master/* /usr/share/nginx/html/
+  echo "Removing temporary files/folders.."
+  rm -rf /usr/share/nginx/html/fastexit-website-template-master*
 fi
 
 # Installing Tor
@@ -61,6 +105,8 @@ read -p "Enter your desired Exit nickname: "  Name
 echo "Nickname $Name" > /etc/tor/torrc
 
 # DirPort for Exit
+echo "Attention! If you installed either "nginx" or another web engine.
+Please use ports 9030 for DirPort, and 9001 for ORPort."
 read -p "Enter your desired DirPort: (example: 80, 9030) " DirPort
 echo "DirPort $DirPort" >> /etc/tor/torrc
 
@@ -235,3 +281,7 @@ echo "ContactInfo $Info" >> /etc/tor/torrc
 # Restarting Tor service
 echo "Restarting the Tor service..."
 service tor restart
+
+# Restarting Nginx service
+echo "Restarting the Nginx service..."
+service nginx restart
