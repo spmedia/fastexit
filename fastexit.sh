@@ -20,7 +20,7 @@
 # author           :TorWorld A Project Under The CryptoWorld Foundation.
 # contributors     :KsaRedFx, SPMedia
 # date             :10-20-2016
-# version          :0.0.3 Alpha
+# version          :0.0.4 Alpha
 # os               :Debian/Ubuntu
 # usage            :bash fastexit.sh
 # notes            :If you have any problems feel free to email us: security[at]torworld.org
