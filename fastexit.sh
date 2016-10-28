@@ -18,7 +18,7 @@
 # title            :FastExit
 # description      :This script will make it super easy to run a Tor Exit Node.
 # author           :TorWorld A Project Under The CryptoWorld Foundation.
-# contributors     :KsaRedFx, SPMedia
+# contributors     :KsaRedFx, SPMedia, Lunar
 # date             :10-20-2016
 # version          :0.0.4 Alpha
 # os               :Debian/Ubuntu
