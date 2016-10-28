@@ -286,3 +286,12 @@ service tor restart
 # Restarting Nginx service
 echo "Restarting the Nginx service..."
 service nginx restart
+
+# Installing TorARM
+read -p "Would you like to install Tor ARM to help monitor your Relay? (Y/N)" REPLY
+if [ "${REPLY,,}" == "y" ]; then
+   apt-get install tor-arm
+   echo "Fixing the Tor RC to allow Tor ARM"
+   echo "DisableDebuggerAttachment 0" >> /etc/tor/torrc
+   echo "To start TorARM just type: "arm""
+fi
