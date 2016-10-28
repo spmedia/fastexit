@@ -132,6 +132,7 @@ ExitPolicy reject 85.93.0.0/24:*
 ExitPolicy reject 85.93.5.0/24:*
 ExitPolicy reject 85.121.39.0/24:*
 ExitPolicy reject 85.239.149.0/24:*
+ExitPolicy reject 91.192.110.199/24:*
 ExitPolicy reject 91.194.254.0/23:*
 ExitPolicy reject 91.195.120.0/24:*
 ExitPolicy reject 91.195.121.0/24:*
