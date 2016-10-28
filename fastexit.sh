@@ -114,7 +114,7 @@ echo "DirPort $DirPort" >> /etc/tor/torrc
 read -p "Enter your desired ORPort: (example: 443, 9001) " ORPort
 echo "ORPort $ORPort" >> /etc/tor/torrc
 
-## Advanced ExitPolicy Tor Exit Setup. Updated 10/20/16. This policy will help cut down on crimeware/malware/ransomware from using your Tor Exit Node/Server.
+## Advanced ExitPolicy Tor Exit Setup. Updated 10/27/16. This policy will help cut down on crimeware/malware/ransomware from using your Tor Exit Node/Server.
 # Exit Policy for Exit
 echo "Loading in our Exit Policies.."
 cat >> /etc/tor/torrc <<EOL
