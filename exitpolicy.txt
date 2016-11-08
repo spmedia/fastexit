@@ -142,7 +142,9 @@ ExitPolicy reject 147.67.119.102:*
 ExitPolicy reject 62.67.194.130:*
 ExitPolicy reject 176.9.220.168:*
 ExitPolicy reject 82.165.37.26:*
-ExitPolicy reject 184.107.100.67:*
+ExitPolicy reject 72.55.186.0/24:* #funio abuse
+ExitPolicy reject 184.107.100.0/24:* #funio abuse
+ExitPolicy reject 67.205.125.0/24:* #funio abuse
 ExitPolicy accept *:20-21
 ExitPolicy accept *:43
 ExitPolicy accept *:53
