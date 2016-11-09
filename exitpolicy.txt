@@ -143,8 +143,33 @@ ExitPolicy reject 62.67.194.130:*
 ExitPolicy reject 176.9.220.168:*
 ExitPolicy reject 82.165.37.26:*
 ExitPolicy reject 72.55.186.0/24:* #funio abuse
+ExitPolicy reject 174.142.230.0/24:* #funio abuse
 ExitPolicy reject 184.107.100.0/24:* #funio abuse
+ExitPolicy reject 184.107.101.0/24:* #funio abuse
+ExitPolicy reject 184.107.116.0/24:* #funio abuse
+ExitPolicy reject 108.163.147.0/24:* #funio abuse
+ExitPolicy reject 198.72.104.0/24:* #funio abuse
 ExitPolicy reject 67.205.125.0/24:* #funio abuse
+ExitPolicy reject 67.205.105.0/24:* #funio abuse
+ExitPolicy reject 184.107.95.0/24:* #funio abuse
+ExitPolicy reject 5.145.168.0/21:* #comvive abuse
+ExitPolicy reject 37.235.53.0/24:* #comvive abuse
+ExitPolicy reject 37.252.96.0/24:* #comvive abuse
+ExitPolicy reject 77.81.112.0/22:* #comvive abuse
+ExitPolicy reject 77.81.116.0/22:* #comvive abuse
+ExitPolicy reject 91.192.108.0/22:* #comvive abuse
+ExitPolicy reject 93.93.64.0/21:* #comvive abuse
+ExitPolicy reject 151.236.23.0/24:* #comvive abuse
+ExitPolicy reject 158.255.238.0/24:* #comvive abuse
+ExitPolicy reject 185.49.192.0/22:* #comvive abuse
+ExitPolicy reject 185.50.196.0/22:* #comvive abuse
+ExitPolicy reject 185.66.175.0/24:* #comvive abuse
+ExitPolicy reject 185.76.77.0/24:* #comvive abuse
+ExitPolicy reject 185.86.210.0/24:* #comvive abuse
+ExitPolicy reject 185.104.152.0/24:* #comvive abuse
+ExitPolicy reject 185.129.249.0/24:* #comvive abuse
+ExitPolicy reject 192.71.213.0/24:* #comvive abuse
+ExitPolicy reject 195.78.228.0/22:* #comvive abuse
 ExitPolicy accept *:20-21
 ExitPolicy accept *:43
 ExitPolicy accept *:53
