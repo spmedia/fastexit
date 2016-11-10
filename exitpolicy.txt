@@ -193,3 +193,4 @@ ExitPolicy accept *:5228
 ExitPolicy accept *:9418
 ExitPolicy accept *:11371
 ExitPolicy accept *:64738
+ExitPolicy reject *:*
