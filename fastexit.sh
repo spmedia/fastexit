@@ -132,6 +132,13 @@ echo "ContactInfo $Info" >> /etc/tor/torrc
 echo "Restarting the Tor service..."
 service tor restart
 
+# Nginx Logging
+read -p "Do you want to disable Nginx from logging HTTP requests? (Y/N)" REPLY
+if [ "${REPLY,,}" == "y" ]; then
+echo "Preventing Nginx from logging..."
+curl -s "https://raw.githubusercontent.com/torworld/fastexit/master/nginx.conf" > /etc/nginx/nginx.conf
+fi
+
 # Restarting Nginx service
 echo "Restarting the Nginx service..."
 service nginx restart
