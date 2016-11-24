@@ -18,9 +18,9 @@
 # title            :FastExit
 # description      :This script will make it super easy to run a Tor Exit Node.
 # author           :TorWorld A Project Under The CryptoWorld Foundation.
-# contributors     :KsaRedFx, SPMedia, Lunar
-# date             :10-20-2016
-# version          :0.0.5 Alpha
+# contributors     :KsaRedFx, SPMedia, Lunar, NurdTurd
+# date             :11-23-2016
+# version          :0.0.6 Alpha
 # os               :Debian/Ubuntu
 # usage            :bash fastexit.sh
 # notes            :If you have any problems feel free to email us: security[at]torworld.org
@@ -45,6 +45,13 @@ if [ ! -x  /usr/bin/curl ]; then
     echo -e "\033[31mcurl Command Not Found\e[0m"
     echo -e "\033[34mInstalling curl, Please Wait...\e[0m"
     apt-get install curl
+fi
+
+# Checking if dialog is Installed
+if [ ! -x  /usr/bin/dialog ]; then
+    echo -e "\033[31mdialog Command Not Found\e[0m"
+    echo -e "\033[34mInstalling dialog, Please Wait...\e[0m"
+    apt-get install dialog
 fi
 
 # Getting Codename of the OS
@@ -121,8 +128,36 @@ echo "ORPort $ORPort" >> /etc/tor/torrc
 
 ## Advanced ExitPolicy Tor Exit Setup. This policy will help cut down on crimeware/malware/ransomware from using your Tor Exit Node/Server.
 # Exit Policy for Exit
-echo "Loading in our Exit Policies.."
-curl -s "https://raw.githubusercontent.com/torworld/fastexit/master/exitpolicy.txt" >> /etc/tor/torrc
+HEIGHT=20
+WIDTH=120
+CHOICE_HEIGHT=2
+BACKTITLE="TorWorld | FastExit"
+TITLE="FastExit ExitPolicy Setup"
+MENU="Choose one of the following ExitPolicy options:"
+
+OPTIONS=(1 "Reduced ExitPolicy"
+         2 "Browser Only ExitPolicy")
+
+CHOICE=$(dialog --clear \
+                --backtitle "$BACKTITLE" \
+                --title "$TITLE" \
+                --menu "$MENU" \
+                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                "${OPTIONS[@]}" \
+                2>&1 >/dev/tty)
+
+clear
+case $CHOICE in
+        1)
+            echo "Loading in our Exit Policies.."
+            curl -s "https://raw.githubusercontent.com/torworld/fastexit/master/policies/exitpolicy.txt" >> /etc/tor/torrc
+            ;;
+        2)
+            echo "Loading in our Browser Exit Policies.."
+            curl -s "https://raw.githubusercontent.com/torworld/fastexit/master/policies/browserpolicy.txt" >> /etc/tor/torrc
+            ;;
+esac
+clear
 
 # Contact Info for Exit
 read -p "Enter your contact info for your Exit: " Info
@@ -133,10 +168,11 @@ echo "Restarting the Tor service..."
 service tor restart
 
 # Nginx Logging
-read -p "Do you want to disable Nginx from logging HTTP requests? (Y/N)" REPLY
+read -p "Do you want to disable Nginx from logging HTTP requests?
+Warning! This will overwrite your "nginx.conf" file.(Y/N)" REPLY
 if [ "${REPLY,,}" == "y" ]; then
-echo "Preventing Nginx from logging..."
-curl -s "https://raw.githubusercontent.com/torworld/fastexit/master/nginx.conf" > /etc/nginx/nginx.conf
+    echo "Preventing Nginx from logging..."
+    curl -s "https://raw.githubusercontent.com/torworld/fastexit/master/nginx/nginx.conf" > /etc/nginx/nginx.conf
 fi
 
 # Restarting Nginx service
@@ -144,10 +180,10 @@ echo "Restarting the Nginx service..."
 service nginx restart
 
 # Installing TorARM
-read -p "Would you like to install Tor ARM to help monitor your Exit? (Y/N)" REPLY
+read -p "Would you like to install TorARM to help monitor your Exit? (Y/N)" REPLY
 if [ "${REPLY,,}" == "y" ]; then
    apt-get install tor-arm
-   echo "Fixing the Tor RC to allow Tor ARM"
+   echo "Fixing the Tor RC to allow TorARM"
    echo "DisableDebuggerAttachment 0" >> /etc/tor/torrc
    echo "To start TorARM just type: "arm""
 fi
